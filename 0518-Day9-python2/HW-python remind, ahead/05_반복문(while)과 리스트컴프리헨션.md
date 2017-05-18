@@ -1,44 +1,9 @@
-###### 20170518
+###### 20170518 - [python basic]
 
-## 0518 수업노트 
+## 05_ 반복문 /리스트 컴프리헨션 
 
-- while문
-- 함수 사용예제들
-
-<br>
-
-##### Tip. 드롭박스에 터미널 설정파일 추가하는 법
-
-~~~
-드롭박스 세팅파일 저장하고 불러오는 설정 
-
-cd ~/Dropbox
-mkdir settings2
-cd settings2
-settings2에 설정 파일들을 넣는다. 
-cd ~/ 홈폴더로 가는 명령어
-pwd 경로보는 명령어
-
-mv ~/.zshrc ~/Dropbox/settings2/
-이름을 다르게 정해줄 수도 있다.
-.zshrc는 이동하여 터미널에서 실행안된다.
-
-링크걸기
-ln -s ~/Dropbox/settings2/.zshrc ~/
-드롭박스에 옮겨진 .zshrc를 홈폴더(~/)로 이동
-~/ 뒤에 이름을 다르게 지정해줄 수도 있지만 안하는 것이 좋다(나중에 불러올 때 까먹음)
-~~~
-
-심볼릭 링크?
-하드링크?
-
-비트버켓 연동
-
--
-
-<br>
-
-## 1. while문 (반복문)
+#### wps 수업노트 [github 수업자료][1]
+[1]:https://github.com/Fastcampus-WPS-5th/Python/blob/master/08.%20%EC%A0%9C%EC%96%B4%EB%AC%B8.md
 
 ~~~
 while 조건:
