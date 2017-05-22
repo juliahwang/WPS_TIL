@@ -1,0 +1,232 @@
+#### 퀴즈  - 데코레이터
+
+> 두 숫자를 인자로 받는 print_plus 함수를 정의하고 plus함수에 연결하여 "함수시작", 연산값, "함수끝"을 출력하는 코드를 작성하라.
+
+~~~python
+def print_plus(func):
+	inner_func(a, b):
+		print("함수사작")
+		print(func(a, b)) 
+		print("함수 끝")
+	return inner_func
+
+@print_plus
+def plus(a, b):
+	return a + b
+
+print_plus(plus(3, 5))
+## 결과
+# 함수시작
+# 8
+# 함수 끝
+~~~
+
+
+#### 선택정렬
+
+> 정렬방법 중의 하나로, 첫 수와 나머지 수의 최솟값을 비교하여 정렬하는 정렬법
+
+~~~python 
+def selection_sort(sample_list):
+	list_len = len(sample_list)
+	for i in range(list_len - 1): 
+		min_index = i
+		for j in range(i + 1, list_len):
+			if sample_list[min_index] > sample_list[j]:
+				min_index = j
+			
+		sample_list[min_index], sample_list[i] = sample_list[i], sample_list[min_index]
+	return sample_list
+
+sam_list = [5, 3, 7, 2, 6, 4]
+selection_sort(sam_list)
+
+## 결과 
+# [2, 3, 4, 5, 6, 7]
+~~~
+
+
+#### 모듈 
+
+- 파이썬 파일은 각각 하나의 모듈로 취급한다.
+- 모듈 불러오기를 통하여 부가적인 기능을 불러와서 사용한다.
+
+~~~python 
+## module/shop.py
+title = "Shop Module"
+def buy_item():
+	print("Buy Item!")
+
+if __name__ == "__main__":
+	buy_item()
+
+
+## module/game.py
+title = "Game Module"
+def play_game():
+	print("Play game!")
+	
+if __name__ == "__main__":
+	play_game()
+	
+
+## module/lol.py
+import game
+import shop
+
+if __name__ == "__main__":
+print('==Turn on game==')
+game.play_game()
+shop.buy_item()
+~~~
+
+#### `__name__` 변수 
+
+- 각 모듈은 자신의 이름을 가지며, **모듈 이름은 모듈의 전역변수인 `__name__`에서 확인.**
+- 루트파일(lol.py)이 실행될 때 import한 서브파일들이 실행되어버리는 문제가 있다.
+- 파이썬 인터프리터를 통해 실행한 코드인지 확인하여 단순 import한 모듈의 실행을 막으려면
+- `if "__name__" == "__main__";` 코드를 사용한다.
+- 위의 조건문을 쓰고 실행코드를 작성한다. (위 예시 참조)
+
+<br>
+
+#### 네임스페이스 (Namespace)
+
+- 각 모듈은 독립된 네임스페이스를 가진다.
+- import된 모듈의 경우 해당 모듈의 네임스페이스를 사용해 내부 데이터에 접근한다.
+
+##### (1) 단순 import의 경우
+
+- 단순히 모듈을 import할 경우에는 함수 적용 시 모듈의 이름이 전역 네임스페이스에 등록된다.
+- 따라서 함수를 쓸 때는 `모듈명.함수` 로 사용한다.
+
+~~~python
+import <모듈명> 
+# ...
+shop.buy_item()
+~~~
+
+##### (2) from 사용하여 함수를 직접 import할 경우
+
+- `from 모듈명 import 함수명` 으로 사용한다.
+- 이 경우에는 실행코드에서 모듈명을 생략하고  바로 `함수명`만 작성해도 된다. 
+
+~~~python
+# from <모듈 위치> import <임포트할 함수자체명>
+from functions/shop import buy_item
+
+# ...
+buy_item()
+~~~
+  
+##### (3) from 모듈명 * 을 사용해 모듈 내 모든 식별자(변수, 함수) import할 경우
+
+- `from <모듈명> * ` 으로 사용한다.
+- 함수 내의 모든 식별자가 import된다.
+
+~~~python 
+## as 로 별칭할당
+# 이름이 동일한 모듈명이 존재하거나 혼동이 있을 경우 뒤에 as로 구분하는 이름을 명시.
+
+from <모듈명> import <함수> or <변수> as <특정함수> 
+from functions/shop import title as shop.title
+from functions/game import title as game.title
+~~~
+
+~~~python 
+## python에서 인자 전달
+# 프로그램 실행시 인자 전달이 가능하다.
+# 파이썬의 내장 sys 모듈의 argv 리스트에서 확인할 수 있다.
+# 리스트의 첫번째 항목은 모듈명이 전달되므로 2번째 항목부터 전달된 값을 확인할 수 있다.
+# sys모듈은 파이썬 인터프리터와 관련된 정보와 기능을 제공하는 모듈이다.
+# ex_ sys.argv: 파이썬 스크립트로 넘어온 입력인자(args)들의 리스트 반환 
+
+import sys
+
+#import game
+from functions.game import play_game, title as game_title
+from functions.shop import buy_item, title as shop_title
+import sys
+
+title = "Main Module"
+
+if __name__ == "__main__":
+    print(sys.argv)
+    print('==game start==')
+    print(title)
+    print(game_title)
+    print(shop_title)
+    play_game()
+    buy_item()
+ 
+## 결과
+# ['lol_from.py']
+# ==game start==
+# Main Module
+# Game Module
+# Shop Module
+# Play game!
+# Buy item!
+~~~
+
+<br>
+
+
+## 패키지(package)
+
+: 모듈들을 모아둔 특별한 폴더
+
+- 일반 폴더를 패키지로 만들면 계층구조를 지니게 되며, 모듈들을 해당 패키지에 모을 수 있다.
+- 패키지로 사용할 폴더에 `__init__.py` 파일을 넣어주면 해당 폴더는 패키지로 취급된다.
+- `__init__.py`는 비어있어도 무관하다.
+
+![tree]()
+
+#### 터미널에서 트리 구조 확인하는 법
+
+- `tree -I "__pycache__"` : 패턴으로 __pycache__폴더는 보이지 않게 하기.
+
+<br>
+
+#### 패키지 import하기 
+
+- `from <패키지명> import <모듈명>`
+- `import func` 후 함수에 모듈명 붙여 사용(`모듈명.함수`)
+
+
+#### ` * ` 과 `__all__`
+
+- 패키지에 포함된 하위 패키지나 모듈을 불러올 때 ` * `를 사용하면 해당 모듈의 모든 식별자들을 불러온다.
+- 각 모듈에서 자신이 import될 때 불러와질 목록을 지정하고자 한다면 `__all__`을 사용
+- 패키지 자체를 import할 때 자동으로 불러올 목록이 있으면 `__init__.py`에 넣어준다.
+<br>
+
+
+## pycharm 사용
+
+- `cmd + ,` : 설정창 열기
+- 가상환경 찾기 
+	macOS : `/usr/local/var/pyenv/versions/<버전이름>/bin/python
+	
+- 프로젝트 폴더에서 자동완성기능 활성화
+	폴더 오른쪽 마우스 - mark Directory as mark directory - mark as source root선택.
+
+- alt + (Fn) + F12 : 터미널 켜기
+
+
+## 클래스 (class, OOP)
+
+- 파이썬의 모든 것은 객체이며 객체를 사용할 떄는 해당 객체를 참조(reference)하여 사용
+- 객체는 변수와 함수를 지닌다.
+- 객체가 가진 변수는 속성()
+
+~~~python 
+ class A
+ {
+     String a;           //String 타입의 객체
+     a = new String();   //인스턴스
+       
+ } 
+# 어떤 클래스의 타입으로 변수가 선언됐을때 그것을 OOP에서는 객체라고 부르고,
+# 그 객체가 메모리에 실장되서 활동할때 그것을 인스턴스라고 부릅니다.
+~~~
