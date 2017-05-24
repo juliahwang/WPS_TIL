@@ -56,10 +56,10 @@ else 그대로 놔둔다.
 s_list = [2, 3, 7, 4, 9, 6, 2, 7, 3]
 
 def bubble_sort(sample_list):
-    list_len = len(sample_list)
+    list_len = len(sample_list)-1
 
-    for i in range(list_len-1):
-        for j in range(i+1, list_len):
+    for i in range(list_len):
+        for j in range(list_len-i):
             if sample_list[i] > sample_list[j]:
                 sample_list[i], sample_list[j] = sample_list[j], sample_list[i]
     return sample_list
@@ -69,6 +69,26 @@ print(result)
 
 
 ## [2, 2, 3, 3, 4, 6, 7, 7, 9]
+~~~
+
+<br>
+
+#### range 이해
+
+~~~python
+l = [3, 1 ,4, 2] 
+len = len(l)-1 = 3
+i in range(len)
+j in range(i + 1, len-i)
+
+[0] in range(3)
+	[1] in range(3)
+
+[1] in range(3)
+	[2] in range(2)
+
+[2] in range(3)
+	[3] in range(1)
 ~~~
 
 <br>
