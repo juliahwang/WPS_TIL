@@ -19,10 +19,15 @@ class Node(object):
     # 내용에 ?를 쓰지 않으면 마지막 <.*?>를 만족하는 곳까지 모두 찾는다
 
     _pattern_tag_class = r'class="(.*?)"'
-
+#    _pattern_tag_class = r'^\s*<.*?class\s*=\s*['"](.*?)['"]' 라고 쓸수도 있음
 
     def __init__(self, source):
+        # if isinstance(self, str)
+        #   return self.source
+        # elif self.source: ~~~
+        # : 타입을 출력하게 할 수 있음
         self.source = source
+
 
     def __str__(self):
         return '{}\n{}'.format(
@@ -114,6 +119,8 @@ with open('example.html') as f:
 node_div = html.find_tag('div')  # Node의 인스턴스인 html에 find_tag 메소드를 사용하여 tag='div'인 값을 node_div에 반환한다.
 node_p_list = node_div.find_tag('p') # node_p_list는 find_tag 메소드를 사용하여 node_div에 tag='p'인 값을 가진다.
 for node_p in node_p_list:     # node_p_list에 반환된 값들을 content 메소드로 반복문을 사용해 모두 출력한다.
+    print('node_p itself: ', node_p)
+    print('type of node p: ', type(node_p))
     print(node_p.content)
 
 print('----- class_ -----')
