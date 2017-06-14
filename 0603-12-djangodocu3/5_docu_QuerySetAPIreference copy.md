@@ -152,9 +152,49 @@ get()
 
 create()
 
-get_or_create()
+`get_or_create()`
 
-update_or_create()
+	- get_or_create(defaults=None, **kwargs)
+	- 키워드인자를 받아서 객체가 있으면 찾아주고 없으면 생성하는 메서드
+	- (object, created)라는 튜플을 반환한다.
+		object는 생성된, 혹은 반환된 객체를 일컫는다.
+		created는 새로운 객체가 생성되었는지 여부를 boolean(True or False)로 반환한다.
+		
+일반적으로 다음과 같이 써야한다. 
+
+```python
+try:
+	obj = Person.objects.get(
+		first_name='John',
+		last_name='Lennon',
+		)
+except Person.DoesNotExist:
+	obj = Person(
+	first_name='John',
+	last_name='Lennon',
+	birthday = date(1999,9,9),
+	)
+	obj.save()
+```
+
+위를 `get_or_create()`로 다음과 같이 사용할 수 있다.
+
+```python
+obj, created = Person.objects.get_or_create(
+	first_name='John',
+	last_name='Lennon',
+	defaults={'birthday': date(1940, 10, 9)},
+	)
+```
+옵션 인자를 제외한 키워드 인자는 모두 `get()` 메서드를 사용하여 가져오고, **객체를 찾으면** `('찾은객체', False)` 튜플을 반환한다. 
+
+**만약 여러 개의 값을 찾으면** `get()` 메서드의 속성으로 인해 `MultipleObjectsReturned` 예외를 발생시킨다. 
+
+**객체를 찾지 못하면** 새로운 객체를 인스턴스화하여 저장하고 `('찾은객체', True)`를 반환한다.
+
+<br>
+
+update_or_create() 
 
 bulk_create()
 
